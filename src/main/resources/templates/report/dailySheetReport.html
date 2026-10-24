@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Daily Sheet Report')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: menu('report')}"></header>
+<main class="page wide">
+    <div th:replace="~{fragments/layout :: alerts}"></div>
+    <nav th:replace="~{fragments/reportTabs :: tabs('daily')}"></nav>
+
+    <form class="card card-body search-grid" th:action="@{/reportDailySheet}" method="get">
+        <div class="field">
+            <label for="startDate">Start Date</label>
+            <input id="startDate" type="date" name="startDate" th:value="${startDate}" required>
+        </div>
+        <div class="field">
+            <label for="endDate">End Date</label>
+            <input id="endDate" type="date" name="endDate" th:value="${endDate}" required>
+        </div>
+        <div class="actions" style="margin-top: 0;">
+            <button class="btn" type="submit">Submit</button>
+        </div>
+    </form>
+
+    <div th:replace="~{fragments/layout :: totals}"></div>
+
+    <div class="totals-bar" style="margin-top: 12px;">
+        <span>Total Amount: <b th:text="${actualTotal}">0</b></span>
+        <span>Total Collected Amount: <b th:text="${paidTotal}">0</b></span>
+        <span>Total Due Amount: <b th:text="${dueTotal}">0</b></span>
+    </div>
+
+    <div class="panel-grid two" style="margin-top: 18px;" th:classappend="${selected == null} ? 'single' : ''">
+        <section class="card">
+            <div class="card-header"><h2>Daily Sheet Report</h2></div>
+            <div class="table-wrap">
+                <table class="data-table">
+                    <thead>
+                    <tr>
+                        <th>A/C No</th>
+                        <th>Customer Name</th>
+                        <th>Deposit By Partner</th>
+                        <th>Deposited Name</th>
+                        <th>Collected Date</th>
+                        <th class="num">Amount</th>
+                        <th class="num">Paid Amount</th>
+                        <th class="num">Due Amount</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="row : ${report}">
+                        <td>
+                            <a th:href="@{/getDailySheetDetailsInReport(accountId=${row.accountId},accountNumber=${row.accountNumber},startDate=${startDate},endDate=${endDate})}"
+                               th:text="${row.accountNumber}">A/C</a>
+                        </td>
+                        <td th:text="${row.customerName}">Customer</td>
+                        <td th:text="${row.depositByPartner}">-</td>
+                        <td th:text="${row.depositName}">-</td>
+                        <td th:text="${row.date}">Date</td>
+                        <td class="num" th:text="${row.actualAmount}">0</td>
+                        <td class="num" th:text="${row.paidAmount}">0</td>
+                        <td class="num" th:text="${row.dueAmount}">0</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="empty" th:if="${#lists.isEmpty(report)}">No installments found for the selected dates.</p>
+        </section>
+
+        <section class="card" th:if="${selected != null}">
+            <div class="card-header"><h2>Update Daily Sheet Details</h2></div>
+            <div class="card-body">
+                <form class="stack-form" th:action="@{/updateInstallDetailsInReports}" method="post">
+                    <input type="hidden" name="accountId" th:value="${selected.accountId}">
+                    <input type="hidden" name="openingBalance" th:value="${selected.openingBalance}">
+                    <input type="hidden" name="startDate" th:value="${startDate}">
+                    <input type="hidden" name="endDate" th:value="${endDate}">
+                    <div class="field">
+                        <label for="dateId">Date</label>
+                        <input id="dateId" type="date" name="date" th:value="${selected.date}" required>
+                    </div>
+                    <div class="field">
+                        <label for="depositAmount">Deposit Amount</label>
+                        <input id="depositAmount" type="text" name="depositAmount" th:value="${selected.depositAmount}">
+                    </div>
+                    <div class="field">
+                        <label for="depositName">Deposit Name</label>
+                        <input id="depositName" type="text" name="depositName" th:value="${selected.depositName}">
+                    </div>
+                    <div class="field">
+                        <label for="depositByPartner">Deposit By</label>
+                        <input id="depositByPartner" type="text" name="depositByPartner" th:value="${selected.depositByPartner}">
+                    </div>
+                    <div class="field">
+                        <label for="accountNumber">Account Number</label>
+                        <input id="accountNumber" type="text" name="accountNumber" th:value="${selected.accountNumber}" required>
+                    </div>
+                    <div class="field">
+                        <label for="customerName">Customer Name</label>
+                        <input id="customerName" type="text" name="customerName" th:value="${selected.customerName}" required>
+                    </div>
+                    <div class="field">
+                        <label for="actualAmount">Actual Amount</label>
+                        <input id="actualAmount" type="text" name="actualAmount" th:value="${selected.actualAmount}">
+                    </div>
+                    <div class="field">
+                        <label for="paidAmount">Paid Amount</label>
+                        <input id="paidAmount" type="text" name="paidAmount" th:value="${selected.paidAmount}">
+                    </div>
+                    <div class="field">
+                        <label for="installment">Installment</label>
+                        <input id="installment" type="text" name="installment" th:value="${selected.installment}">
+                    </div>
+                    <div class="field">
+                        <label for="close">Close</label>
+                        <select id="close" name="close">
+                            <option value="No" th:selected="${selected.status != 'close'}">No</option>
+                            <option value="Yes" th:selected="${selected.status == 'close'}">Yes</option>
+                        </select>
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-danger" type="submit" formnovalidate
+                                th:formaction="@{/deleteInstallDetailsInReports}"
+                                data-confirm="Delete this installment?">Delete</button>
+                        <button class="btn" type="submit">Update</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+</main>
+<script th:src="@{/script/app.js}"></script>
+</body>
+</html>

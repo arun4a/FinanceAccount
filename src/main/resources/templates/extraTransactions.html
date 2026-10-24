@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Extra Transactions')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: menu('extra')}"></header>
+<main class="page">
+    <div th:replace="~{fragments/layout :: alerts}"></div>
+
+    <section class="card">
+        <div class="card-header"><h2>Extra Transaction Details</h2></div>
+        <div class="card-body">
+            <form class="form-grid" th:action="@{/extraTransactionSave}" method="post">
+                <input type="hidden" name="extraIdSave" th:value="${extraForm.extraIdSave}">
+                <input type="hidden" name="extraSearchDate" th:value="${extraSearchDate}">
+                <div class="field full">
+                    <label for="extraPurposeSave">Purpose</label>
+                    <textarea id="extraPurposeSave" name="extraPurposeSave" th:text="${extraForm.extraPurposeSave}"></textarea>
+                </div>
+                <div class="field">
+                    <label for="extraAmountSave">Amount</label>
+                    <input id="extraAmountSave" type="text" name="extraAmountSave" th:value="${extraForm.extraAmountSave}">
+                </div>
+                <div class="field">
+                    <label for="extraDateSave">Date</label>
+                    <input id="extraDateSave" type="date" name="extraDateSave" th:value="${extraForm.extraDateSave}" required>
+                </div>
+                <div class="actions full">
+                    <button class="btn" type="submit" th:if="${!editing}">Submit</button>
+                    <th:block th:if="${editing}">
+                        <button class="btn btn-danger" type="submit" formnovalidate
+                                th:formaction="@{/extraTransactionDelete}"
+                                data-confirm="Delete this transaction?">Delete</button>
+                        <button class="btn" type="submit" th:formaction="@{/extraTransactionUpdate}">Update</button>
+                        <a class="btn btn-secondary" th:href="@{/extraTransaction}">New</a>
+                    </th:block>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <form class="card card-body search-grid" th:action="@{/extraTransaction}" method="get">
+        <div class="field">
+            <label for="extraSearchDate">Date</label>
+            <input id="extraSearchDate" type="date" name="extraSearchDate" th:value="${extraSearchDate}">
+        </div>
+        <div class="actions" style="margin-top: 0;">
+            <button class="btn" type="submit">Search</button>
+            <a class="btn btn-secondary" th:href="@{/extraTransaction}">Show All</a>
+        </div>
+    </form>
+
+    <section class="card">
+        <div class="card-header">
+            <h2>Extra Transaction Details</h2>
+            <span class="muted">Total: <b th:text="${total}">0</b></span>
+        </div>
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th class="num">Amount</th>
+                    <th>Purpose</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="e : ${transactions}">
+                    <td>
+                        <a th:href="@{/displayExtraDetails(openDate=${e.extraDate},extraId=${e.extraId},extraAmount=${e.extraAmount},extraPurpose=${e.extraPurpose})}"
+                           th:text="${e.extraDate}">Date</a>
+                    </td>
+                    <td class="num" th:text="${e.extraAmount}">0</td>
+                    <td th:text="${e.extraPurpose}">Purpose</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="empty" th:if="${#lists.isEmpty(transactions)}">No extra transactions found.</p>
+    </section>
+</main>
+<script th:src="@{/script/app.js}"></script>
+</body>
+</html>

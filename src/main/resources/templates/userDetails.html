@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Change Password')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: menu('')}"></header>
+<main class="page narrow">
+    <div class="page-head">
+        <h1 class="page-title">Change Password</h1>
+        <a class="btn btn-secondary" th:href="@{/successAction}">Back to Dashboard</a>
+    </div>
+    <div th:replace="~{fragments/layout :: alerts}"></div>
+    <form class="card card-body stack-form" th:action="@{/userController}" method="post">
+        <div class="field">
+            <label for="userName">User Name</label>
+            <input id="userName" name="userName" type="text"
+                   th:value="${userDetails != null ? userDetails.userName : session.userName}" readonly>
+        </div>
+        <div class="field">
+            <label for="password">New Password</label>
+            <input id="password" name="password" type="password" required>
+        </div>
+        <div class="field">
+            <label for="cnewPassword">Confirm Password</label>
+            <input id="cnewPassword" name="cnewPassword" type="password" required>
+        </div>
+        <div class="actions">
+            <button class="btn" type="submit">Update</button>
+        </div>
+    </form>
+</main>
+</body>
+</html>

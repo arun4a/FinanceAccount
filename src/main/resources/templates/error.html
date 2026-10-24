@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Error')}"></head>
+<body>
+<main class="page narrow" style="padding-top: 48px;">
+    <div class="card">
+        <div class="card-header"><h2>Something went wrong</h2></div>
+        <div class="card-body">
+            <p><strong>Status:</strong> <span th:text="${status}">500</span></p>
+            <p th:if="${error}"><strong>Error:</strong> <span th:text="${error}">Internal Server Error</span></p>
+            <p th:if="${message}"><strong>Message:</strong> <span th:text="${message}">An unexpected error occurred.</span></p>
+            <p class="muted" th:if="${path}">Path: <span th:text="${path}">/</span></p>
+            <div class="actions">
+                <a class="btn" th:href="@{/successAction}">Back to Dashboard</a>
+                <a class="btn btn-secondary" th:href="@{/}">Login</a>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

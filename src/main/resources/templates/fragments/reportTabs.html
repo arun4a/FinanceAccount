@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<nav th:fragment="tabs(active)" class="report-tabs">
+    <a th:href="@{/report}" th:classappend="${active == 'bonds'} ? 'active'">Issued Bonds Report</a>
+    <a th:href="@{/reportDailySheet}" th:classappend="${active == 'daily'} ? 'active'">Daily Sheet Report</a>
+    <a th:href="@{/reportDeposits}" th:classappend="${active == 'deposits'} ? 'active'">Deposit Report</a>
+    <a th:href="@{/reportMonthlyInterest}" th:classappend="${active == 'interest'} ? 'active'">Monthly Interest Report</a>
+    <a th:href="@{/reportExtraTransaction}" th:classappend="${active == 'extra'} ? 'active'">Extra Transaction Report</a>
+</nav>
+</body>
+</html>

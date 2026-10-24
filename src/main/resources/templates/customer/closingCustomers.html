@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Closing Accounts')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: menu('closing')}"></header>
+<main class="page wide">
+    <div th:replace="~{fragments/layout :: alerts}"></div>
+    <form class="card card-body search-grid" th:action="@{/closingCustomerAction}" method="get">
+        <div class="field">
+            <label for="customerNameSearch">Customer Name</label>
+            <input id="customerNameSearch" type="text" name="customerNameSearch"
+                   th:value="${customerNameSearch}" placeholder="Enter Customer Name">
+        </div>
+        <div class="field">
+            <label for="accountNumber">Account Number</label>
+            <input id="accountNumber" type="text" name="accountNumber"
+                   th:value="${accountNumber}" placeholder="Enter Account Number">
+        </div>
+        <div class="field">
+            <label for="mobileNumber">Mobile Number</label>
+            <input id="mobileNumber" type="text" name="mobileNumber"
+                   th:value="${mobileNumber}" placeholder="Enter Mobile Number">
+        </div>
+        <div class="actions" style="margin-top: 0;">
+            <button class="btn" type="submit">Search</button>
+        </div>
+    </form>
+    <div th:replace="~{fragments/layout :: totals}"></div>
+
+    <section class="card" style="margin-top: 18px;">
+        <div class="card-header">
+            <h2>Closing Customers</h2>
+            <a class="btn btn-secondary btn-small" th:href="@{/closingCustomerAction}">Refresh</a>
+        </div>
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead>
+                <tr>
+                    <th>A/c No</th>
+                    <th>Customer Name</th>
+                    <th>Surety Name</th>
+                    <th>Date Of Issue</th>
+                    <th>Date Of Close</th>
+                    <th class="num">Amount</th>
+                    <th class="num">Original Amount</th>
+                    <th class="num">Paid amount</th>
+                    <th class="num">Due Amount</th>
+                    <th class="center">Total Installments</th>
+                    <th class="center">Completed Installments</th>
+                    <th class="center">Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="row : ${customers}">
+                    <tr class="month-row" th:if="${row.showMonthHeader}">
+                        <td colspan="12" th:text="${row.groupMonth}">Month</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a th:href="@{/customerDetailsUpdateClose(customerId=${row.customerId})}"
+                               th:text="${row.accountNumber}">A/C</a>
+                        </td>
+                        <td th:text="${row.customerName}">Customer</td>
+                        <td th:text="${row.suretyName}">Surety</td>
+                        <td th:text="${row.dateOfIssue}">Date</td>
+                        <td th:text="${row.closingDate}">Date</td>
+                        <td class="num" th:text="${row.amount}">0</td>
+                        <td class="num" th:text="${row.originalAmount}">0</td>
+                        <td class="num" th:text="${row.paidAmount}">0</td>
+                        <td class="num" th:text="${row.dueAmount}">0</td>
+                        <td class="center">
+                            <a th:href="@{/installDetailsClose(accountNumberNew=${row.accountNumber})}"
+                               th:text="${row.installments}">0</a>
+                        </td>
+                        <td class="center" th:text="${row.completedInstallments}">0</td>
+                        <td class="center" th:text="${row.status}">close</td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
+        <p class="empty" th:if="${#lists.isEmpty(customers)}">No closing customers found.</p>
+    </section>
+</main>
+<script th:src="@{/script/app.js}"></script>
+</body>
+</html>

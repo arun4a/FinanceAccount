@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Monthly Interest Report')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: menu('report')}"></header>
+<main class="page">
+    <div th:replace="~{fragments/layout :: alerts}"></div>
+    <nav th:replace="~{fragments/reportTabs :: tabs('interest')}"></nav>
+
+    <form class="card card-body search-grid" th:action="@{/reportMonthlyInterest}" method="get">
+        <div class="field">
+            <label for="startDate">Start Date</label>
+            <input id="startDate" type="date" name="startDate" th:value="${startDate}" required>
+        </div>
+        <div class="field">
+            <label for="endDate">End Date</label>
+            <input id="endDate" type="date" name="endDate" th:value="${endDate}" required>
+        </div>
+        <div class="actions" style="margin-top: 0;">
+            <button class="btn" type="submit">Submit</button>
+        </div>
+    </form>
+
+    <div th:replace="~{fragments/layout :: totals}"></div>
+
+    <div class="totals-bar" style="margin-top: 12px;">
+        <span>Total Paid Amount: <b th:text="${paidTotal}">0</b></span>
+    </div>
+
+    <section class="card" style="margin-top: 18px;">
+        <div class="card-header"><h2>Monthly Interest Report</h2></div>
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead>
+                <tr>
+                    <th>A/C No</th>
+                    <th>Deposit Name</th>
+                    <th class="num">Paid Amount</th>
+                    <th>Paid Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="p : ${report}">
+                    <td th:text="${p.depositAccountNo}">A/C</td>
+                    <td th:text="${p.depositName}">Deposit</td>
+                    <td class="num" th:text="${p.paidAmount}">0</td>
+                    <td th:text="${p.crtDate}">Date</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="empty" th:if="${#lists.isEmpty(report)}">No monthly interest records found for the selected dates.</p>
+    </section>
+</main>
+<script th:src="@{/script/app.js}"></script>
+</body>
+</html>

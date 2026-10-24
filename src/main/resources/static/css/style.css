@@ -1,0 +1,205 @@
+* { margin: 0; padding: 0; }
+ul { list-style: none; }
+:focus { outline: 0; }/* remember to highlight inserts somehow! */
+table { border-collapse: collapse; border-spacing: 0;}
+img, img a { border: 0; outline: 0; }
+h1,h2,h3{font-weight:normal;}
+a { color:#000; }
+a:hover {color:#000;text-decoration: underline;}
+.clear { clear:both; height:0px; }
+textarea { resize: none; }
+/*body { margin:0 auto; padding: 0px; font-size:62.5%; font-weight:normal;font-family:Arial, Helvetica, sans-serif;}*/
+
+ 
+ 
+.wrapper{ width:942px; margin:0 auto;}
+.logo img{ width:100%;}
+.pB30{ padding-bottom:30px;}
+.pL12{ padding-left:12%;}
+
+.logo{ padding:32px 0; width:215px;}
+.headerBg{ height:16px; background:url(/assets/emi-calc/images/bg-hedder.jpg) repeat-x 0 0;}
+
+.mid-wrapper{ padding-top:25px;}
+.midTop-text{ padding-bottom:28px;}
+.midTop-text h1{font-family: 'HelveticaNeueBold'; font-size:2.4em; color:#0963c7; }
+.midTop-text p, .midTop-text a{color:#575757; font-size:1.4em; padding:12px 0;}
+.midTop-text ul li p{ padding:5px 0 0 0; font-size:1em;}
+.midTop-text a{ color:#ff0000; font-weight:bold;}
+.midTop-text li{color:#575757; font-size:1.3em; padding-bottom:5px; list-style:disc; margin-left:20px; line-height:18px;}
+.midTop-text li a{font-size:13px; padding:0; text-decoration:none;}
+.midTop-text li a:hover{ text-decoration:underline;}
+
+/* ========= start Emi div ========== */
+.emi-cal{ border:1px solid #d1d2d3; margin-bottom:20px; float:left; width:100%;}
+.emi-cal h2{ color:#fff; font-size:2em;  font-family: 'HelveticaNeueRegular'; padding:10px 0; background:#108de7; text-align:center; }
+.pointer{ text-align:center; position:relative; top:-2px;}
+.formDiv{ padding:0 0 15px 0;}
+.formDiv li{padding:15px 0 0 2%; float:left; width:48%; height:50px;}
+.formDiv li label{ padding:6px 2% 0 0; width:48%; color:#0963c7; font-size:1.5em; display:block; float:left; line-height:18px;}
+.formDiv li label.pT0{ /*padding-top:0;*/}
+.formDiv li input{width:47%; padding:0 1%; height:27px; border:1px solid #cccccc; background:none; float:left; color:#575757; font-size:1.4em; line-height:25px;}
+.formDiv li input.green{ background:#dddddd; border:1px solid #d0d0d0;}
+.formDiv li label.widthLess{padding-left:12%; width:28%;}
+.formDiv li .button{padding-left:8%; float:left;}
+.formDiv li input.reset{ width:122px; height:36px; background:url(/assets/emi-calc/images/reset.png) no-repeat 0 0; border:0; margin-right:10px; display:none; cursor:pointer; float:none;}
+.formDiv li input.cal{ width:122px; height:36px; background:url(/assets/emi-calc/images/cal.png) no-repeat 0 0; border:0; cursor:pointer; float:none;}
+
+.selBox{width:50%; float:left; position:relative; box-sizing: border-box; -ms-box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;}
+.selBox .selVal{border:1px solid #cccccc; height:30px; padding:0 27px 0 10px; line-height:30px; font-size:1.4em; color:#575757; background:url(/assets/emi-calc/images/bg-list.png) no-repeat right 0; overflow:hidden;}
+.selBox  select{width:100%; height:30px; position:absolute; top:0; left:0; opacity:0;  filter:alpha(opacity=0); cursor:pointer; border:none;}
+.selBox  select option{padding:3px 0 3px 10px; color:#575757;  border:none; font-size:1.1em;}
+
+.totalDiv{ float:none; background:#ececec; padding:15px 0 15px 2%; width:98%; display:none;}
+.totalDiv li{color:#0963c7; font-size:1.5em; float:left; padding:9px 1.5% 0 0;}
+.totalDiv li.col-1{ width:90px; padding-top:0;}
+.totalDiv li p{ font-size:1em; text-align:center;}
+.totalDiv li.rate,.totalDiv li.emi, .totalDiv li.Fee, .totalDiv li.FeeServTax{ color:#777; font-size:1.4em; padding-right:6%; font-weight:bold;}
+.totalDiv li.FeeServTax{ padding-right:0;}
+.totalDiv li.pT0{ padding-top:0px;}
+.formDiv li.w100{ width:100%; padding:15px 0 0 0; text-align:center}
+
+/* ========= end Emi div ========== */
+
+/* ========= Start Terms Condi ========== */
+.termsCondi{ color:#575757; width:80%; margin:0 auto;}
+.termsCondi ul li{ float:left;margin-left:2%; width:23.5%; 	box-sizing: border-box;}
+.termsCondi ul li.first{ margin-left:0;}
+.termsCondi ul li img{ width:90%;}
+.termsCondiNote{ font-size:1.5em; text-align:center; font-weight:bold; padding-top:10px; color:#777;}
+/* ========= End Terms Condi ========== */
+
+/* ========= Start EMI table ========== */
+.emiTable-wrap{ padding-top:10px; margin:0 auto; padding: 0px; font-size:70%; font-weight:normal;font-family:Arial, Helvetica, sans-serif;}
+.emiTable-wrap h2{color:#3d3d3d; background:#108de7; background:url(/assets/emi-calc/images/bg-table-title.png) no-repeat 0 0; width:366px; height:29px; color:#fefefe; padding-top:12px; font-size:1.6em; font-family: 'HelveticaNeueBold'; text-align:center;}
+.emiTable-wrap table{border:1px solid #d1cfcf; width:100%;}
+.emiTable-wrap td{ background:#f2fafc; border:1px solid #d8dfe0; border-collapse:collapse; font-size:1.3em; padding:10px 5px; text-align:center; }
+.emiTable-wrap tr.headerTr td{ background:#bfccce; font-weight:bold; padding:3px 5px; height:34px;}
+.emiTable-wrap tr.headerTr td.emi-serviceTaxHeader{ background:#57b7fc;}
+.emiTable-wrap tr.totalTr td{ background:#c8f4ff; font-weight:bold;}
+td.emi-serviceTaxHeader{ background:#e3f3ff;}
+
+ul.emiTable-note{list-style:disc; padding:15px 10px 0 10px; display:none;}
+.emiTable-note li{ font-size:1.2em;  padding:1px 0; margin-left:7px; color:#575757;}
+
+.mTable, .dTable{ display:none;}
+.emiTable-wrap .mTable td{ text-align:left; padding:3%; font-size:1.7em; width:42%;}
+.emiTable-wrap .mTable td.bgColor{ background:#c8f4ff; font-weight:bold;}
+/* ========= End EMI table   ========== */
+.mTable .selBox{ width:150px; float:none; padding-bottom:10px;}
+.botButtion{ margin-top:20px;}
+.botButtion a{ margin-right:10px;}
+.title2{color:#575757; font-size:1.4em; padding:12px 0;}
+.link2{display:none;}
+
+@media only screen and (max-width : 940px) {
+	.wrapper{ width:728px;}
+	.wrapper.pB30{padding:0 20px 20px 20px;}
+	.formDiv li label, .totalDiv li{ font-size:1.2em;}
+	.formDiv li label{ width:48%;}
+	
+	.formDiv li label.widthLess{padding-left:8%;width:37%;}
+	.formDiv li .button{padding-left:7%;}
+	.selBox .selVal {font-size:1.2em;}
+	.formDiv li input{ font-size:1.2em;}
+	.selBox select option{ font-size:13px; padding:6px 0 3px 7px}
+	.totalDiv li{ padding-right:1.5%;}
+	.totalDiv li.rate, .totalDiv li.emi, .totalDiv li.Fee, .totalDiv li.FeeServTax{ padding-right:4%;}
+}
+
+@media only screen and (min-width : 640px) and (max-width : 767px) {
+	.wrapper{ width:600px;}
+	.totalDiv li{padding-right:3%;}
+	.totalDiv li.w18{ width:auto;}
+	.totalDiv li.rate, .totalDiv li.emi, .totalDiv li.Fee{ padding-right:14%;}
+	.selBox{width:50%;}
+	.formDiv li label{ padding-right:0;}
+
+	.selBox .selVal{padding-left:1px; font-size:1.1em;}
+	.selBox select option{ font-size:11px; padding:6px 0 0 3px}
+	.formDiv li input{ font-size:1.1em;}
+	.mTable .selBox .selVal{ padding-left:8px; font-size:1.4em;}
+	.mTable .selBox option{ padding-left:8px; font-size:1.1em;}
+}
+
+@media only screen and (max-width : 640px) {
+	.wrapper{ width:580px;}
+	.emi-cal h2{ font-size:2.5em;}
+	.formDiv li{ width:92%; padding:15px 0 0 4%}
+	.formDiv li label, .totalDiv li{ font-size:1.7em; line-height:22px;}
+	.formDiv li label.widthLess{ padding-left:0; width:48%;}
+	.formDiv li input{ height:40px; line-height:35px; font-size:1.7em; padding:0 2%; width:47%;}
+	.formDiv li label{ width:48%;}
+	.selBox{width:51%;}
+	.selBox .selVal{ height:40px; padding:0 45px 0 10px; background:url("/assets/emi-calc/images/bg-list-m.png") no-repeat right -3px; font-size:1.7em; line-height:40px;}
+	.formDiv li{ padding:15px 0 7px 4%;}
+	.selBox select{ height:40px;}
+	.selBox select option{ font-size:17px;}
+	
+	.formDiv li input.cal{background:url("/assets/emi-calc/images/m-cal.png") no-repeat 0 0; width:140px; height:50px;}
+	.formDiv li input.reset{background:url("/assets/emi-calc/images/m-reset.png") no-repeat 0 0; width:140px; height:50px;}
+	.pL12{ padding-left:0;}
+	
+	.totalDiv{ width:95%; padding-left:5%; }
+	.totalDiv li, .totalDiv li.w18, .totalDiv li.col-1{ width:48%; padding:5px 2% 15px 0;}
+	.totalDiv li.rate, .totalDiv li.emi, .totalDiv li.Fee{ padding-right:0; }
+	.midTop-text p, .midTop-text a{font-size:1.5em; line-height:23px;}
+	
+	.totalDiv li.pT0{ clear:both;}
+	.totalDiv li p{ text-align:left;}
+	.totalDiv li.FeeServTax{ padding-right:0;}
+}
+
+@media only screen and (max-width : 639px) {
+	.wrapper{ width:500px;}
+	.wrapper.pB30{padding:0 15px 20px 15px;}
+	.formDiv li{padding:15px 0 7px 2%; width:96%;}
+	.formDiv li label, .formDiv li label.widthLess{ width:46%;}
+	.selBox{ width:52%;}
+	.formDiv li input{ width:47%;}
+}
+
+@media only screen and (max-width : 529px) {
+	.wrapper{ width:450px;}
+	.midTop-text h1{ font-size:2em;}
+	.midTop-text p, .midTop-text a{ font-size:1.5em; line-height:20px;}
+	.emi-cal h2{ font-size:2.2em;}
+	.formDiv li label, .totalDiv li, .emiTable-wrap .mTable td{ font-size:1.4em;}
+	.selBox .selVal, .formDiv li input{font-size:1.5em;}
+	.selBox select option{ font-size:1.1em;}
+	.formDiv li label, .totalDiv li, .emiTable-wrap .mTable td{line-height:15px;}
+}
+
+@media only screen and (max-width : 479px) {
+	.wrapper{ width:330px;}
+	.midTop-text h1{ font-size:1.5em;}
+	.emi-cal h2{ font-size:1.8em;}
+	.midTop-text p, .midTop-text a{ font-size:1.2em; padding:3px 0;}
+	.midTop-text{ padding-bottom:15px;}
+	.selBox .selVal{ height:30px; line-height:30px; padding:0 25px 0 2px; font-size:1.2em; background:url("/assets/emi-calc/images/bg-list.png") no-repeat right 0;}
+	.selBox select option{ font-size:12px; padding-left:2px;}
+	.selBox select{ height:30px;}
+	.formDiv li{ padding:8px 0 0 2%;}
+	.formDiv li input{font-size:1.2em; height:30px; line-height:30px; padding:0 0 0 2px; width:50%;}
+	.formDiv li label, .totalDiv li, .emiTable-wrap .mTable td{ font-size:1.2em;}
+	.formDiv li input.cal{ background:url("/assets/emi-calc/images/cal.png") no-repeat 0 0; height:36px; width:122px;}
+	.formDiv li input.reset{background:url("/assets/emi-calc/images/reset.png") no-repeat 0 0; height:36px; width:122px;}
+	
+	.mTable .selBox .selVal{ padding-left:8px; font-size:1.3em;}
+	.mTable .selBox select option{ padding-left:8px; font-size:13px;}
+	
+}
+
+@media only screen and (max-width : 359px) {
+	.wrapper{ width:310px;}
+	.wrapper.pB30{padding:0 5px 20px 5px}
+	.midTop-text h1{ font-size:1.4em;}
+	.emi-cal h2{ font-size:1.7em;}
+	.formDiv li label, .totalDiv li, .emiTable-wrap .mTable td{ font-size:1.1em;}
+	.formDiv li{padding:3px 0 0 2%;}
+	.selBox .selVal{ font-size:1.1em;}
+	.selBox select option{ font-size:11px; padding-top:3px;}
+	
+	.mTable .selBox .selVal{ padding-left:8px; font-size:1.3em;}
+	.mTable .selBox select option{ padding-left:8px; font-size:13px;}
+}

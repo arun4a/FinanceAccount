@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Mobile Numbers')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: menu('mobile')}"></header>
+<main class="page">
+    <div th:replace="~{fragments/layout :: alerts}"></div>
+
+    <form class="card card-body search-grid" th:action="@{/mobileNumber}" method="get">
+        <div class="field">
+            <label for="customerNameSearch">Customer Name</label>
+            <input id="customerNameSearch" type="text" name="customerNameSearch"
+                   th:value="${customerNameSearch}" placeholder="Enter Customer Name">
+        </div>
+        <div class="field">
+            <label for="accountNumber">Account Number</label>
+            <input id="accountNumber" type="text" name="accountNumber"
+                   th:value="${accountNumber}" placeholder="Enter Account Number">
+        </div>
+        <div class="actions" style="margin-top: 0;">
+            <button class="btn" type="submit">Submit</button>
+        </div>
+    </form>
+
+    <form class="card card-body" th:action="@{/mobileNumberAdd}" method="post">
+        <div class="form-grid">
+            <input type="hidden" name="customerNameSearch" th:value="${customerNameSearch}">
+            <input type="hidden" name="accountNumber" th:value="${accountNumber}">
+            <input type="hidden" name="customerMobId" th:value="${customerMobId}">
+            <div class="field">
+                <label for="customer2mob">Customer Second Mobile Number</label>
+                <input id="customer2mob" type="text" name="customer2mob">
+            </div>
+            <div class="field">
+                <label for="surety2mob">Surety Second Mobile Number</label>
+                <input id="surety2mob" type="text" name="surety2mob">
+            </div>
+            <div class="actions full">
+                <button class="btn" type="submit">Add</button>
+            </div>
+        </div>
+    </form>
+
+    <section class="card">
+        <div class="card-header"><h2>Mobile Number Details</h2></div>
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead>
+                <tr>
+                    <th>Customer Mobile Number</th>
+                    <th>Surety Mobile Number</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row : ${mobileRows}">
+                    <td class="center" th:text="${row.customerMobileNo}">-</td>
+                    <td class="center" th:text="${row.suretyMobileNo}">-</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="empty" th:if="${#lists.isEmpty(mobileRows)}">Search by customer name or account number to view mobile numbers.</p>
+    </section>
+</main>
+<script th:src="@{/script/app.js}"></script>
+</body>
+</html>

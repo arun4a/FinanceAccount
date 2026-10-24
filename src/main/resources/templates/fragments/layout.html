@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${title} + ' | Finance Account'">Finance Account</title>
+    <link rel="icon" th:href="@{/img/ganesh-ji-pics-collection.jpg}">
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+
+<header th:fragment="menu(active)">
+    <div class="top-bar">
+        <div class="brand">Laxmi Ganapathi Finance</div>
+        <div class="user-box">
+            <span>Hi <b th:text="${session.userName}">User</b></span>
+            <a th:href="@{/userUpdate}">Password</a>
+            <a th:href="@{/logout}">LogOut</a>
+        </div>
+    </div>
+    <nav class="main-menu">
+        <a th:href="@{/successAction}" th:classappend="${active == 'dashboard'} ? 'active'">DashBoard</a>
+        <a th:href="@{/customerTab}" th:classappend="${active == 'customer'} ? 'active'">Customer</a>
+        <a th:href="@{/closingCustomerAction}" th:classappend="${active == 'closing'} ? 'active'">Closing Accounts</a>
+        <a th:href="@{/report}" th:classappend="${active == 'report'} ? 'active'">Report</a>
+        <a th:href="@{/displayDepositDetails}" th:classappend="${active == 'deposits'} ? 'active'">Deposits</a>
+        <a th:href="@{/extraTransaction}" th:classappend="${active == 'extra'} ? 'active'">Extra Transactions</a>
+        <a th:href="@{/mobileNumber}" th:classappend="${active == 'mobile'} ? 'active'">Mobile Number</a>
+        <a th:href="@{/monthlyReportDetails}" th:classappend="${active == 'monthly'} ? 'active'">Monthly Report</a>
+    </nav>
+</header>
+
+<div th:fragment="alerts">
+    <div class="flash" th:if="${message}" th:text="${message}">message</div>
+    <div class="flash flash-error" th:if="${error}" th:text="${error}">error</div>
+</div>
+
+<div th:fragment="totals" class="totals-bar">
+    <span>Daily Collection: <b th:text="${collected['totalCollectedAmountDaily']}">0</b></span>
+    <span>Monthly Collection: <b th:text="${collected['totalCollectedAmountMonth']}">0</b></span>
+    <span>Daily Issued Bonds: <b th:text="${issued['totalIssuedAmountDaily']}">0</b></span>
+    <span>Monthly Issued Bonds: <b th:text="${issued['totalIssuedAmountMonth']}">0</b></span>
+    <span>Opening Balance: <b th:text="${issued['TotalOpeningBalance']}">0</b></span>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('User Registration')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: menu('')}"></header>
+<main class="page narrow">
+    <div class="page-head">
+        <h1 class="page-title">User Registration</h1>
+        <a class="btn btn-secondary" th:href="@{/successAction}">Back to Dashboard</a>
+    </div>
+    <div th:replace="~{fragments/layout :: alerts}"></div>
+    <form class="card card-body form-grid" th:action="@{/userRegistration}" method="post">
+        <div class="field">
+            <label for="fName">First Name</label>
+            <input id="fName" name="fName" type="text" th:value="${registration.fName}">
+        </div>
+        <div class="field">
+            <label for="sName">Sur Name</label>
+            <input id="sName" name="sName" type="text" th:value="${registration.sName}">
+        </div>
+        <div class="field">
+            <label for="fatherName">Father Name</label>
+            <input id="fatherName" name="fatherName" type="text" th:value="${registration.fatherName}">
+        </div>
+        <div class="field">
+            <label for="userName">User Name</label>
+            <input id="userName" name="userName" type="text" th:value="${registration.userName}" required>
+        </div>
+        <div class="field">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" required>
+        </div>
+        <div class="field">
+            <label for="cpassword">Confirm Password</label>
+            <input id="cpassword" name="cpassword" type="password" required>
+        </div>
+        <div class="field">
+            <label for="phoneNo">Phone Number</label>
+            <input id="phoneNo" name="phoneNo" type="text" th:value="${registration.phoneNo}">
+        </div>
+        <div class="field">
+            <label for="address">Address</label>
+            <textarea id="address" name="address" th:text="${registration.address}"></textarea>
+        </div>
+        <div class="actions full">
+            <button class="btn" type="submit">Add</button>
+            <button class="btn btn-secondary" type="reset">Reset</button>
+        </div>
+    </form>
+</main>
+</body>
+</html>

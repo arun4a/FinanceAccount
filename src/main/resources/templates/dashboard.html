@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Dashboard')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: menu('dashboard')}"></header>
+<main class="page wide">
+    <div th:replace="~{fragments/layout :: alerts}"></div>
+    <div th:replace="~{fragments/layout :: totals}"></div>
+    <div class="grid" style="margin-top: 18px;">
+        <section class="card span-5">
+            <div class="card-header"><h2>Daily Sheet</h2></div>
+            <div class="card-body">
+                <form class="stack-form" th:action="@{/dailySheet}" method="post">
+                    <div class="field">
+                        <label for="dailyDate">Date</label>
+                        <input id="dailyDate" type="date" name="date" th:value="${daily.date}" required>
+                    </div>
+                    <div class="field">
+                        <label for="depositAmount">Deposit Amount</label>
+                        <input id="depositAmount" type="text" name="depositAmount" th:value="${daily.depositAmount}">
+                    </div>
+                    <div class="field">
+                        <label for="depositName">Deposit Name</label>
+                        <input id="depositName" type="text" name="depositName" th:value="${daily.depositName}">
+                    </div>
+                    <div class="field">
+                        <label for="depositBy">Deposit By</label>
+                        <input id="depositBy" type="text" name="depositBy" th:value="${daily.depositBy}">
+                    </div>
+                    <div class="field">
+                        <label for="dailyAccount">Account Number</label>
+                        <div class="inline">
+                            <input id="dailyAccount" type="text" name="accountNumber" th:value="${daily.accountNumber}">
+                            <button class="btn btn-secondary btn-small" type="submit"
+                                    th:formaction="@{/getCustomerDailySheet}" formnovalidate>Get Details</button>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="dailyCustomerName">Customer Name</label>
+                        <input id="dailyCustomerName" type="text" name="customerName" th:value="${daily.customerName}" required>
+                    </div>
+                    <div class="field">
+                        <label for="actaulAmount">Actual Amount</label>
+                        <input id="actaulAmount" type="text" name="actaulAmount" th:value="${daily.actaulAmount}">
+                    </div>
+                    <div class="field">
+                        <label for="paidAmount">Paid Amount</label>
+                        <input id="paidAmount" type="text" name="paidAmount" th:value="${daily.paidAmount}">
+                    </div>
+                    <div class="field">
+                        <label for="installment">Installment</label>
+                        <input id="installment" type="text" name="installment" th:value="${daily.installment}">
+                    </div>
+                    <div class="field">
+                        <label for="dailyClose">Close</label>
+                        <select id="dailyClose" name="close">
+                            <option value="No" th:selected="${daily.close != 'Yes'}">No</option>
+                            <option value="Yes" th:selected="${daily.close == 'Yes'}">Yes</option>
+                        </select>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" type="submit">Submit</button>
+                        <button class="btn btn-secondary" type="reset">Reset</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section class="card span-7">
+            <div class="card-header"><h2>Issued Bond</h2></div>
+            <div class="card-body">
+                <form class="form-grid" th:action="@{/customerDetails}" method="post">
+                    <div class="field">
+                        <label for="issuedDate">Date</label>
+                        <input id="issuedDate" type="date" name="issuedDate" th:value="${bond.issuedDate}" required>
+                    </div>
+                    <div class="field">
+                        <label for="accountNumberNew">A/C No</label>
+                        <div class="inline">
+                            <input id="accountNumberNew" type="text" name="accountNumberNew" th:value="${bond.accountNumberNew}">
+                            <button class="btn btn-secondary btn-small" type="submit" name="getId" value="get"
+                                    th:formaction="@{/successActionGet}" formnovalidate>Get Details</button>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="customerNameN">Customer Name</label>
+                        <input id="customerNameN" type="text" name="customerNameN" th:value="${bond.customerNameN}" required>
+                    </div>
+                    <div class="field">
+                        <label for="custRel">Relation / Father Name</label>
+                        <div class="inline">
+                            <select id="custRel" name="custRel" style="max-width: 90px;">
+                                <option value="S/o" th:selected="${bond.custRel == 'S/o'}">S/o</option>
+                                <option value="W/o" th:selected="${bond.custRel == 'W/o'}">W/o</option>
+                                <option value="D/o" th:selected="${bond.custRel == 'D/o'}">D/o</option>
+                            </select>
+                            <input id="fatherName" type="text" name="fatherName" th:value="${bond.fatherName}" placeholder="Name">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="occupation">Occupation</label>
+                        <input id="occupation" type="text" name="occupation" th:value="${bond.occupation}">
+                    </div>
+                    <div class="field">
+                        <label for="mobileNumber">Mobile Number</label>
+                        <input id="mobileNumber" type="text" name="mobileNumber" th:value="${bond.mobileNumber}">
+                    </div>
+                    <div class="field full">
+                        <label for="address">Address</label>
+                        <textarea id="address" name="address" th:text="${bond.address}"></textarea>
+                    </div>
+
+                    <div class="full"><h3 class="table-title" style="margin: 4px 0 0;">Surety Details</h3></div>
+                    <div class="field">
+                        <label for="suretyName">Surety Name</label>
+                        <input id="suretyName" type="text" name="suretyName" th:value="${bond.suretyName}">
+                    </div>
+                    <div class="field">
+                        <label for="sureRel">Relation / Father Name</label>
+                        <div class="inline">
+                            <select id="sureRel" name="sureRel" style="max-width: 90px;">
+                                <option value="S/o" th:selected="${bond.sureRel == 'S/o'}">S/o</option>
+                                <option value="W/o" th:selected="${bond.sureRel == 'W/o'}">W/o</option>
+                                <option value="D/o" th:selected="${bond.sureRel == 'D/o'}">D/o</option>
+                            </select>
+                            <input id="suretyFatherName" type="text" name="suretyFatherName" th:value="${bond.suretyFatherName}" placeholder="Name">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="suretyOccupation">Surety Occupation</label>
+                        <input id="suretyOccupation" type="text" name="suretyOccupation" th:value="${bond.suretyOccupation}">
+                    </div>
+                    <div class="field">
+                        <label for="suretyMobileNumber">Surety Mobile Number</label>
+                        <input id="suretyMobileNumber" type="text" name="suretyMobileNumber" th:value="${bond.suretyMobileNumber}">
+                    </div>
+                    <div class="field full">
+                        <label for="suretyAddress">Surety Address</label>
+                        <textarea id="suretyAddress" name="suretyAddress" th:text="${bond.suretyAddress}"></textarea>
+                    </div>
+
+                    <div class="full"><h3 class="table-title" style="margin: 4px 0 0;">Amount Details</h3></div>
+                    <div class="field">
+                        <label for="amountNew">Amount</label>
+                        <input id="amountNew" type="text" name="amountNew" th:value="${bond.amountNew}">
+                    </div>
+                    <div class="field">
+                        <label for="originalAmount">Original Amount</label>
+                        <input id="originalAmount" type="text" name="originalAmount" th:value="${bond.originalAmount}">
+                    </div>
+                    <div class="field">
+                        <label for="installmentsN">Installments</label>
+                        <input id="installmentsN" type="text" name="installmentsN" th:value="${bond.installmentsN}">
+                    </div>
+                    <div class="field">
+                        <label for="accountNo">Bank Account No</label>
+                        <input id="accountNo" type="text" name="accountNo" th:value="${bond.accountNo}">
+                    </div>
+                    <div class="field full">
+                        <div class="check-row">
+                            <label><input type="checkbox" name="passBook" value="on" th:checked="${bond.passBook == 'on'}"> PassBook</label>
+                            <label><input type="checkbox" name="atm" value="on" th:checked="${bond.atm == 'on'}"> Atm</label>
+                            <label for="cheque">Cheque</label>
+                            <select id="cheque" name="cheque" style="max-width: 90px;">
+                                <option th:each="n : ${#numbers.sequence(0, 10)}" th:value="${n}" th:text="${n}"
+                                        th:selected="${bond.cheque == n.toString()}">0</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="actions full">
+                        <button class="btn" type="submit">Submit</button>
+                        <button class="btn btn-secondary" type="reset">Reset</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Monthly Interest Details')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: menu('deposits')}"></header>
+<main class="page wide">
+    <div th:replace="~{fragments/layout :: alerts}"></div>
+
+    <form class="card card-body search-grid" th:action="@{/displayMonthlyDetails}" method="get">
+        <div class="field">
+            <label for="depositAccountNumber">Account Number</label>
+            <input id="depositAccountNumber" type="text" name="depositAccountNumber"
+                   th:value="${depositAccountNumber}" placeholder="Enter Account Number" required>
+        </div>
+        <div class="actions" style="margin-top: 0;">
+            <button class="btn" type="submit">Search</button>
+            <a class="btn btn-secondary" th:href="@{/displayDepositDetails}">Back to Deposits</a>
+        </div>
+    </form>
+
+    <div class="panel-grid two" th:classappend="${selected == null} ? 'single' : ''">
+        <section class="card">
+            <div class="card-header"><h2>Interest Details</h2></div>
+            <div class="table-wrap">
+                <table class="data-table">
+                    <thead>
+                    <tr>
+                        <th>A/C No</th>
+                        <th>Payment Date</th>
+                        <th class="num">Paid Amount</th>
+                        <th class="num">Monthly Interest</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="p : ${payments}">
+                        <td>
+                            <a th:href="@{/displayPaymentInterestDetails(depositsIdDispaly=${p.depositsId},depositAccountNumber=${p.depositAccountNo})}"
+                               th:text="${p.depositAccountNo}">A/C</a>
+                        </td>
+                        <td th:text="${p.crtDate}">Date</td>
+                        <td class="num" th:text="${p.paidAmountFromActual}">0</td>
+                        <td class="num" th:text="${p.paidAmount}">0</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="empty" th:if="${#lists.isEmpty(payments)}">No monthly interest records found.</p>
+        </section>
+
+        <section class="card" th:if="${selected != null}">
+            <div class="card-header"><h2>Update Interest Details</h2></div>
+            <div class="card-body">
+                <form class="stack-form" th:action="@{/updateMonthPayment}" method="post">
+                    <input type="hidden" name="depositsIdUpdate" th:value="${selected.depositsId}">
+                    <input type="hidden" name="depositAccountNumber" th:value="${selected.depositAccountNo}">
+                    <div class="field">
+                        <label for="dateId">Payment Date</label>
+                        <input id="dateId" type="date" name="date" th:value="${selected.actualCrtDate}" required>
+                    </div>
+                    <div class="field">
+                        <label for="depositAccountNoUpdate">Account Number</label>
+                        <input id="depositAccountNoUpdate" type="text" name="depositAccountNoUpdate"
+                               th:value="${selected.depositAccountNo}" required>
+                    </div>
+                    <div class="field">
+                        <label for="paidAmountFromActualUpdate">Paid Amount</label>
+                        <input id="paidAmountFromActualUpdate" type="text" name="paidAmountFromActualUpdate"
+                               th:value="${selected.paidAmountFromActual}">
+                    </div>
+                    <div class="field">
+                        <label for="paidAmountUpdate">Monthly Interest</label>
+                        <input id="paidAmountUpdate" type="text" name="paidAmountUpdate"
+                               th:value="${selected.paidAmount}">
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-danger" type="submit" formnovalidate
+                                th:formaction="@{/deleteMonthPayment}"
+                                data-confirm="Delete this monthly interest record?">Delete</button>
+                        <button class="btn" type="submit">Update</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+</main>
+<script th:src="@{/script/app.js}"></script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Login')}"></head>
+<body class="login-page">
+<main class="login-card">
+    <div class="card-header">
+        <h1>Login</h1>
+    </div>
+    <div class="login-body">
+        <img class="brand-mark" th:src="@{/img/ganesh-ji-pics-collection.jpg}" alt="Finance Account">
+        <p class="login-subtitle">Laxmi Ganapathi Finance</p>
+        <div th:replace="~{fragments/layout :: alerts}"></div>
+        <form th:action="@{/userLogin}" method="post">
+            <div class="field">
+                <label for="userName">User Id</label>
+                <input id="userName" name="userName" type="text" maxlength="50"
+                       autocomplete="username" required autofocus>
+            </div>
+            <div class="field">
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password" maxlength="50"
+                       autocomplete="current-password" required>
+            </div>
+            <button class="btn" type="submit">Submit</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

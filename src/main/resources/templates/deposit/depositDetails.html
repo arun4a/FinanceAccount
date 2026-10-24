@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Deposits')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: menu('deposits')}"></header>
+<main class="page wide">
+    <div th:replace="~{fragments/layout :: alerts}"></div>
+
+    <div class="panel-grid">
+        <section class="card">
+            <div class="card-header"><h2>Deposit Details</h2></div>
+            <div class="card-body">
+                <form class="stack-form" th:action="@{/depositDetailsSave}" method="post">
+                    <input type="hidden" name="depositIdSave" th:value="${depositForm.depositIdSave}">
+                    <div class="field">
+                        <label for="depositNameSave">Deposit Name</label>
+                        <input id="depositNameSave" type="text" name="depositNameSave"
+                               th:value="${depositForm.depositNameSave}" required>
+                    </div>
+                    <div class="field">
+                        <label for="accountNumberSave">Account Number</label>
+                        <input id="accountNumberSave" type="text" name="accountNumberSave"
+                               th:value="${depositForm.accountNumberSave}" required>
+                    </div>
+                    <div class="field">
+                        <label for="opendDateSave">Opening Date</label>
+                        <input id="opendDateSave" type="date" name="opendDateSave"
+                               th:value="${depositForm.opendDateSave}" required>
+                    </div>
+                    <div class="field">
+                        <label for="amountSave">Amount</label>
+                        <input id="amountSave" type="text" name="amountSave"
+                               th:value="${depositForm.amountSave}" required>
+                    </div>
+                    <div class="field">
+                        <label for="closeDateSave">Closing Date</label>
+                        <input id="closeDateSave" type="date" name="closeDateSave"
+                               th:value="${depositForm.closeDateSave}">
+                    </div>
+                    <div class="field">
+                        <label for="mobileNoSave">Mobile No</label>
+                        <input id="mobileNoSave" type="text" name="mobileNoSave"
+                               th:value="${depositForm.mobileNoSave}">
+                    </div>
+                    <div class="field">
+                        <label for="depositTypeSave">Deposit Type</label>
+                        <select id="depositTypeSave" name="depositTypeSave">
+                            <option value="In" th:selected="${depositForm.depositTypeSave != 'Out'}">In</option>
+                            <option value="Out" th:selected="${depositForm.depositTypeSave == 'Out'}">Out</option>
+                        </select>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" type="submit" th:if="${#strings.isEmpty(depositForm.depositIdSave)}">Submit</button>
+                        <th:block th:if="${!#strings.isEmpty(depositForm.depositIdSave)}">
+                            <button class="btn btn-danger" type="submit" formnovalidate
+                                    th:formaction="@{/depositDetailsDelete}"
+                                    data-confirm="Delete this deposit and its interest records?">Delete</button>
+                            <button class="btn" type="submit" th:formaction="@{/depositDetailsUpdate}">Update</button>
+                            <a class="btn btn-secondary" th:href="@{/displayDepositDetails}">New</a>
+                        </th:block>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="card-header"><h2>Monthly Payment</h2></div>
+            <div class="card-body">
+                <form class="stack-form" th:action="@{/depositMonthPayment}" method="post">
+                    <div class="field">
+                        <label for="accountNumberMonth">Account Number</label>
+                        <input id="accountNumberMonth" type="text" name="accountNumberMonth"
+                               th:value="${interest != null ? interest['EnterAccountNumber'] : ''}" required>
+                    </div>
+                    <div class="field">
+                        <label for="paymentDate">Payment Date</label>
+                        <input id="paymentDate" type="date" name="paymentDate"
+                               th:value="${interest != null ? interest['EnterPaymentDate'] : #dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
+                               required>
+                    </div>
+                    <div class="field">
+                        <label for="paidAmountA">Out Amount</label>
+                        <input id="paidAmountA" type="text" name="paidAmountA" value="0">
+                    </div>
+                    <div class="field">
+                        <label for="amountMonth">Interest
+                            <small id="interestForDays" class="field-hint"
+                                   th:text="${interest != null ? interest['InterestForDays'] : ''}"></small>
+                        </label>
+                        <input id="amountMonth" type="text" name="amountMonth"
+                               th:value="${interest != null ? interest['Interest'] : '0'}">
+                    </div>
+                    <div class="actions">
+                        <button class="btn" type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="card-header"><h2>Total Deposit Details</h2></div>
+            <div class="card-body summary-list">
+                <div><span>Total Deposit Amount</span><b th:text="${totals['TotalDepositAmount']}">0</b></div>
+                <div><span>Total Deposit In Amount</span><b th:text="${totals['TotalDepositInAmount']}">0</b></div>
+                <div><span>Total Deposit Out Amount</span><b th:text="${totals['TotalDepositOutAmount']}">0</b></div>
+                <div><span>Total Paid Interest</span><b th:text="${totals['TotalMontlyPaidInterest']}">0</b></div>
+            </div>
+        </section>
+    </div>
+
+    <form class="card card-body search-grid" th:action="@{/displayDepositDetails}" method="get" style="margin-top: 18px;">
+        <div class="field">
+            <label for="depositNameSearch">Depositor Name</label>
+            <input id="depositNameSearch" type="text" name="depositNameSearch"
+                   th:value="${depositNameSearch}" placeholder="Enter Deposit Name">
+        </div>
+        <div class="field">
+            <label for="depositAccountNumber">Account Number</label>
+            <input id="depositAccountNumber" type="text" name="depositAccountNumber"
+                   th:value="${depositAccountNumber}" placeholder="Enter Account Number">
+        </div>
+        <div class="actions" style="margin-top: 0;">
+            <button class="btn" type="submit">Search</button>
+        </div>
+    </form>
+
+    <section class="card">
+        <div class="card-header"><h2>Deposits Details</h2></div>
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead>
+                <tr>
+                    <th>Depositor Name</th>
+                    <th>A/C No</th>
+                    <th>Mobile Number</th>
+                    <th>Open Date</th>
+                    <th>Close Date</th>
+                    <th class="num">Original Amount</th>
+                    <th class="num">Out Amount</th>
+                    <th class="num">Due Amount</th>
+                    <th class="num">Monthly Interest</th>
+                    <th class="center">Deposit Type</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="d : ${deposits}">
+                    <td>
+                        <a th:href="@{/displayDepositDetails(depositId=${d.depositId})}"
+                           th:text="${d.depositName}">Deposit</a>
+                    </td>
+                    <td th:text="${d.accountNumber}">A/C</td>
+                    <td th:text="${d.mobileNo}">-</td>
+                    <td th:text="${d.openDate}">-</td>
+                    <td th:text="${d.closeDate}">-</td>
+                    <td class="num" th:text="${d.amount}">0</td>
+                    <td class="num" th:text="${d.paidAmountFromActual}">0</td>
+                    <td class="num" th:text="${d.dueAmount}">0</td>
+                    <td class="num">
+                        <a th:href="@{/displayMonthlyDetails(depositAccountNumber=${d.accountNumber})}"
+                           th:text="${d.paidAmount}">0</a>
+                    </td>
+                    <td class="center" th:text="${d.depositType}">In</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="empty" th:if="${#lists.isEmpty(deposits)}">No deposits found.</p>
+    </section>
+</main>
+<script th:src="@{/script/app.js}"></script>
+</body>
+</html>

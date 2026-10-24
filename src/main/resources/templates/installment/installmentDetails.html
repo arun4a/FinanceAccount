@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Installment Details')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: menu(${mode == 'close' ? 'closing' : 'customer'})}"></header>
+<main class="page wide">
+    <div th:replace="~{fragments/layout :: alerts}"></div>
+
+    <form class="card card-body search-grid" method="get"
+          th:action="${mode == 'close'} ? @{/installDetailsClose} : @{/installDetails}">
+        <div class="field">
+            <label for="accountNumberNew">Account Number</label>
+            <input id="accountNumberNew" type="text" name="accountNumberNew"
+                   th:value="${accountNumber}" placeholder="Enter Account Number" required>
+        </div>
+        <div class="actions" style="margin-top: 0;">
+            <button class="btn" type="submit">Search</button>
+            <a class="btn btn-secondary" th:href="@{${backUrl}}">Back to Customers</a>
+        </div>
+    </form>
+
+    <div th:replace="~{fragments/layout :: totals}"></div>
+
+    <div class="panel-grid two" style="margin-top: 18px;" th:classappend="${selected != null} ? '' : 'single'">
+        <section class="card">
+            <div class="card-header">
+                <h2>Installment Details</h2>
+                <button class="btn btn-secondary btn-small no-print" type="button" data-print>Print</button>
+            </div>
+            <div class="table-wrap">
+                <table class="data-table">
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>A/C No</th>
+                        <th>Deposited By Partner</th>
+                        <th class="center">Installment</th>
+                        <th>Deposit Name</th>
+                        <th class="num">Actual Amount</th>
+                        <th class="num">Paid amount</th>
+                        <th class="num">Due amount</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="row : ${installments}">
+                        <td>
+                            <a th:href="@{${displayUrl}(accountId=${row.accountId},accountNumber=${row.accountNumber})}"
+                               th:text="${row.date}">Date</a>
+                        </td>
+                        <td th:text="${row.accountNumber}">A/C</td>
+                        <td th:text="${row.depositByPartner}">-</td>
+                        <td class="center" th:text="${row.installment}">0</td>
+                        <td th:text="${row.depositName}">-</td>
+                        <td class="num" th:text="${row.actualAmount}">0</td>
+                        <td class="num" th:text="${row.paidAmount}">0</td>
+                        <td class="num" th:text="${row.dueAmount}">0</td>
+                    </tr>
+                    <tr class="subtotal-row">
+                        <td colspan="5">Total</td>
+                        <td class="num" th:text="${actualTotal}">0</td>
+                        <td class="num" th:text="${paidTotal}">0</td>
+                        <td class="num" th:text="${dueTotal}">0</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="card" th:if="${selected != null}">
+            <div class="card-header"><h2>Update Daily Sheet Details</h2></div>
+            <div class="card-body">
+                <form class="stack-form" method="post" th:action="${updateUrl}">
+                    <input type="hidden" name="accountId" th:value="${selected.accountId}">
+                    <input type="hidden" name="openingBalance" th:value="${selected.openingBalance}">
+                    <div class="field">
+                        <label for="dateId">Date</label>
+                        <input id="dateId" type="date" name="date" th:value="${selected.date}" required>
+                    </div>
+                    <div class="field">
+                        <label for="depositAmount">Deposit Amount</label>
+                        <input id="depositAmount" type="text" name="depositAmount" th:value="${selected.depositAmount}">
+                    </div>
+                    <div class="field">
+                        <label for="depositName">Deposit Name</label>
+                        <input id="depositName" type="text" name="depositName" th:value="${selected.depositName}">
+                    </div>
+                    <div class="field">
+                        <label for="depositByPartner">Deposit By</label>
+                        <input id="depositByPartner" type="text" name="depositByPartner" th:value="${selected.depositByPartner}">
+                    </div>
+                    <div class="field">
+                        <label for="instAccountNumber">Account Number</label>
+                        <input id="instAccountNumber" type="text" name="accountNumber" th:value="${selected.accountNumber}" required>
+                    </div>
+                    <div class="field">
+                        <label for="customerName">Customer Name</label>
+                        <input id="customerName" type="text" name="customerName" th:value="${selected.customerName}" required>
+                    </div>
+                    <div class="field">
+                        <label for="actualAmount">Actual Amount</label>
+                        <input id="actualAmount" type="text" name="actualAmount" th:value="${selected.actualAmount}">
+                    </div>
+                    <div class="field">
+                        <label for="rowPaidAmount">Paid Amount</label>
+                        <input id="rowPaidAmount" type="text" name="paidAmount" th:value="${selected.paidAmount}">
+                    </div>
+                    <div class="field">
+                        <label for="rowInstallment">Installment</label>
+                        <input id="rowInstallment" type="text" name="installment" th:value="${selected.installment}">
+                    </div>
+                    <div class="field">
+                        <label for="close">Close</label>
+                        <select id="close" name="close">
+                            <option value="No" th:selected="${selected.status != 'close'}">No</option>
+                            <option value="Yes" th:selected="${selected.status == 'close'}">Yes</option>
+                        </select>
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-danger" type="submit" formnovalidate
+                                th:formaction="${deleteUrl}" data-confirm="Delete this installment?">Delete</button>
+                        <button class="btn" type="submit">Update</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+</main>
+<script th:src="@{/script/app.js}"></script>
+</body>
+</html>
