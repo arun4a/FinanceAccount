@@ -1,0 +1,393 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+    <constant name="struts.action.excludePattern" value="/UpdateStatus, /captcha.png, /getDownLoadLink, /demoRequest"/>	
+    <constant name="struts.enable.SlashesInActionNames" value="true"/>
+    <constant name="struts.mapper.alwaysSelectFullNamespace" value="false"/>
+    <constant name="struts.patternMatcher" value="regex" />
+    
+    <package name="default" extends="struts-default" namespace ="/">
+        <interceptors>
+            <interceptor-stack name="fileUploadStack">
+                <interceptor-ref name="exception" />
+                <interceptor-ref name="alias" />
+                <interceptor-ref name="servletConfig" />
+                <interceptor-ref name="prepare" />
+                <interceptor-ref name="i18n" />
+                <interceptor-ref name="chain" />
+                <interceptor-ref name="debugging" />
+                <interceptor-ref name="profiling" />
+                <interceptor-ref name="scopedModelDriven" />
+                <interceptor-ref name="modelDriven" />
+                <interceptor-ref name="fileUpload">
+                    <param name="maximumSize">10240</param>
+                    <param name="allowedTypes"> image/jpeg,image/gif,image/png</param>
+                </interceptor-ref>
+                <interceptor-ref name="checkbox" />
+                <interceptor-ref name="staticParams" />
+                <interceptor-ref name="actionMappingParams" />
+                <interceptor-ref name="params">
+                    <param name="excludeParams"> dojo\..*,^struts\..*</param>
+                </interceptor-ref>
+                <interceptor-ref name="conversionError" />
+                <interceptor-ref name="validation">
+                    <param name="excludeMethods"> input,back,cancel,browse</param>
+                </interceptor-ref>
+                <interceptor-ref name="workflow">
+                    <param name="excludeMethods"> input,back,cancel,browse</param>
+                </interceptor-ref>
+            </interceptor-stack>
+        </interceptors>	
+        
+        <action name="userLogin" method="userLogin" class="com.sun.user.UserLoginController">
+            <result name="success" type="redirectAction"    >
+                <param name="actionName">successAction</param>
+                <param name="id">${id}</param> 
+            </result>
+            <result name="failure" type="redirectAction"    > 
+                <param name="actionName">failAction</param> 
+                <param name="id">${id}</param> 
+            </result>
+        </action>
+        
+    
+        
+       
+      
+        <action name="successActionGet">
+            <param name="get">get</param>
+            <result>jsp/dashboard.jsp</result>
+        </action>
+            
+        <action name="successAction">
+            <result>jsp/dashboard.jsp</result>
+        </action>
+        <action name="failAction">
+            <result>index.jsp</result>
+        </action>
+        
+        <action name="regSuccess">
+            <result>jsp/userRegistration.jsp</result>
+        </action>
+        <action name="userDetails" >
+            <result>jsp/UserDetails.jsp</result>
+        </action>
+        
+        <action name="report" >
+            <result>report/Report.jsp</result>
+        </action>
+        
+        
+        <action name="userRegistration" method="userRegistration" class="com.sun.user.UserRegistrationController"> 
+            <result name="success" type="redirectAction" > 
+                <param name="message">${message}</param>
+                <param name="actionName">regSuccess</param> 
+            </result>
+        </action>
+        
+        <action name="customerDetailsUpdate"   class="com.sun.update.UpdateCustomerController" method="customerDetailsDispaly">
+            <result name="success">customer/UpdataCustomer.jsp</result>
+        </action>
+        
+        <action name="customerDetailsUpdateClose"   class="com.sun.update.UpdateCustomerController" method="customerDetailsDispalyClose">
+            <result name="success">customer/UpdataCustomerClose.jsp</result>
+        </action>
+        
+        <action name="customerDetailsDelete"   class="com.sun.update.UpdateCustomerController" method="customerDetailsDelete">
+            <param name="message">${message}</param>
+            <result name="success" >  
+                customer/CustomerDetails.jsp
+            </result>  
+        </action>
+        
+        <action name="customerDetailsDeleteClose"   class="com.sun.update.UpdateCustomerController" method="customerDetailsDeleteClose">
+            <param name="message">${message}</param>
+            <result name="success" >  
+                customer/CustomerDetails.jsp
+            </result>  
+        </action>
+        
+        <action name="customerDetailsUpdates"   class="com.sun.update.UpdateCustomerController" method="customerDetailsUpdates">
+            <param name="message">${message}</param>
+            <result name="success" >  
+                customer/CustomerDetails.jsp
+            </result>  
+        </action>
+        <action name="customerDetailsUpdatesClose"   class="com.sun.update.UpdateCustomerController" method="customerDetailsUpdatesClose">
+            <param name="message">${message}</param>
+            <result name="success"   >  
+                customer/closingCustomers.jsp
+            </result>   
+        </action>
+        
+        <action name="reportDailySheet"  >
+            <result  >report/dailySheetReport.jsp</result>
+        </action>
+        
+        <!--========   Account Details-->
+        <action name="customerDetails" method="customerDetails" class="com.sun.Accounts.DailySheetController">
+            <param name="message">${message}</param>
+            <result name="success"   >
+                jsp/dashboard.jsp 
+            </result>
+        </action>
+        <action name="dailySheet" method="dailySheet" class="com.sun.Accounts.DailySheetController">
+            <param name="message">${message}</param>
+            <result name="success"   >
+                jsp/dashboard.jsp 
+            </result>
+            
+            <result name="fail"   >
+                jsp/dashboard.jsp 
+            </result>
+        </action>
+        <action name="dailySheetSuccess">
+            <result>jsp/dashboard.jsp</result>
+        </action>
+       
+      
+      
+        <!--installemets details--> 
+      
+        <action name="customerTab">
+            <result>customer/CustomerDetails.jsp</result>
+        </action>
+         
+        <action name="closingCustomerAction">
+            <result>customer/closingCustomers.jsp</result>
+        </action>
+        <action name="instalOpenAction">
+            <result >installment/installmentDetails.jsp</result>
+        </action>
+        
+        <action name="instalCloseAction"> 
+            <result  >installment/installmentDetailsClose.jsp</result> 
+        </action>  
+        
+        <action name="installDetails" method="instalDetails" class="com.sun.Accounts.DailySheetController">
+            <param name="message">${message}</param>
+            <result name="success">installment/installmentDetails.jsp</result>
+            <param name="message">${message}</param>
+            <result name="fail"  >
+                customer/CustomerDetails.jsp 
+            </result> 
+        </action> 
+        
+        <action name="installDetailsClose" method="instalDetailsClose" class="com.sun.Accounts.DailySheetController">
+            <param name="message">${message}</param>
+            <result name="success">installment/installmentDetailsClose.jsp</result> 
+            <param name="message">${message}</param>
+            <result name="fail"   >
+                customer/closingCustomers.jsp             
+            </result> 
+        </action>  
+        
+        <action name="displayInstall"   method="displayInstallments" class="com.sun.update.UpdateInstallmentController">
+            <result name="success">installment/installmentDetails.jsp</result>
+        </action>
+         
+        <action name="displayInstallClose"   method="displayInstallmentsClose" class="com.sun.update.UpdateInstallmentController">
+            <param name="message">${message}</param>
+            <result name="success">installment/installmentDetailsClose.jsp</result>
+        </action>
+        
+        <action name="updateInstallDetailsClose"   method="updateInstallDetailsClose" class="com.sun.update.UpdateInstallmentController">
+            <param name="message">${message}</param>
+            <result name="success"   >installment/installmentDetailsClose.jsp  </result>  
+        </action>  
+       
+      
+        <action name="updateInstallDetails"   method="updateInstallDetails" class="com.sun.update.UpdateInstallmentController">
+            <param name="message">${message}</param>
+            <result name="success"   >installment/installmentDetails.jsp  </result>  
+        </action>  
+        
+        <action name="deleteInstallDetailsClose"   method="deleteInstallDetailsClose" class="com.sun.update.UpdateInstallmentController">
+            <param name="message">${message}</param>
+            <result name="success"   >installment/installmentDetailsClose.jsp  </result>  
+        </action>  
+        <action name="deleteInstallDetails"   method="deleteInstallDetails" class="com.sun.update.UpdateInstallmentController">
+            <param name="message">${message}</param>
+            <result name="success"   >installment/installmentDetails.jsp  </result>  
+        </action>  
+      
+      
+      
+      
+        <!--DepositsDetails-->
+        <!--reportDeposits-->
+        
+        
+        
+        <action name="depositDetailsDelete"   method="depositDetailsDelete" class="com.sun.deposit.DepositsController">
+            <param name="res_msg">${res_msg}</param>
+            <result name="success"  > deposit/DepositDetails.jsp  </result>  
+        </action>
+        
+        <action name="reportMonthlyInterest"   > 
+            <result  >report/reportMonthlyReport.jsp</result>
+        </action>
+        <action name="reportDeposits"   > 
+            <result  >report/reportDeposit.jsp</result>
+        </action>
+        
+        <action name="deleteMonthPayment" method="deleteMonthPayment" class="com.sun.deposit.DepositMonthPaymentController" >
+            <param name="res_msg">${res_msg}</param>
+            <result name="success">deposit/depositMonthlyDetails.jsp</result>
+        </action>
+        <action name="updateMonthPayment" method="updateMonthPayment" class="com.sun.deposit.DepositMonthPaymentController" >
+            <param name="res_msg">${res_msg}</param>
+            <result name="success">deposit/depositMonthlyDetails.jsp</result>
+            <result name="failure">deposit/depositMonthlyDetails.jsp</result>
+        </action>
+        
+        <action name="displayPaymentInterestDetails" method="displayPaymentInterestDetails" class="com.sun.deposit.DepositMonthPaymentController" >
+            <result name="success">deposit/depositMonthlyDetails.jsp</result>
+        </action>
+        
+        <action name="displayMonthlyDetails" method="displayMonthlyDetails" class="com.sun.deposit.DepositMonthPaymentController" >
+            <result name="success">deposit/depositMonthlyDetails.jsp</result>
+        </action>
+        
+        
+        <action name="depositMonthPayment" method="depositMonthPayment" class="com.sun.deposit.DepositMonthPaymentController" >
+            <param name="res_msg">${res_msg}</param>
+            <result name="success">deposit/DepositDetails.jsp</result>
+        </action>
+      
+        <action name="depositsAction" >
+            <result >deposit/DepositDetails.jsp</result>
+        </action>
+      
+        <action name="depositDetailsSave" class="com.sun.deposit.DepositsController"  method="saveDeposits" >
+            <param name="res_msg">${res_msg}</param>
+            <result name="success"  > deposit/DepositDetails.jsp  </result>  
+            <result name="failure">deposit/DepositDetails.jsp </result>
+        </action>
+        <action name="depositDetailsUpdate"   method="updateDepositsDetails" class="com.sun.deposit.DepositsController">
+            <param name="res_msg">${res_msg}</param>
+            <result name="success"  > deposit/DepositDetails.jsp  </result>  
+        </action>
+                     
+        
+        
+        <action name="searchDeposits"   method="displayDepositDetails" class="com.sun.deposit.DepositsController">
+            <result name="success">deposit/DepositDetails.jsp</result> 
+        </action>    	
+                     
+        <action name="displayDepositDetails"   method="displayDepositDetails" class="com.sun.deposit.DepositsController">
+            <result name="success">deposit/DepositDetails.jsp</result> 
+        </action>    	
+                                
+        <action name="logout" method="logout" class="com.sun.user.UserLoginController">
+            <result name="success" >index.jsp</result>
+        </action>
+                                
+        <!--==============extraTransaction=============-->
+         
+        <action name="extraTransaction" method="extraTransaction" class="com.sun.extra.ExtraTransController">
+            <result name="success" >jsp/ExtraTransactions.jsp</result>
+        </action> 
+        <action name="searchExtraDetails" method="extraTransaction" class="com.sun.extra.ExtraTransController"> 
+            <result name="success" >jsp/ExtraTransactions.jsp</result>
+        </action>
+        
+        <action name="extraTransactionUpdate" method="extraTransactionUpdate" class="com.sun.extra.ExtraTransController">
+            <param name="res_msg">${res_msg}</param>
+            <result name="success" >jsp/ExtraTransactions.jsp</result>
+        </action>
+        
+        <action name="extraTransactionDelete" method="extraTransactionDelete" class="com.sun.extra.ExtraTransController">
+            <param name="res_msg">${res_msg}</param>
+            <result name="success" >jsp/ExtraTransactions.jsp</result>
+        </action>
+        
+        
+        <action name="displayExtraDetails" method="extraTransaction" class="com.sun.extra.ExtraTransController">
+            <result name="success" >jsp/ExtraTransactions.jsp</result>
+        </action> 
+        
+        
+        <action name="extraTransactionSave" method="extraTransactionSave" class="com.sun.extra.ExtraTransController">
+            <param name="res_msg">${res_msg}</param>
+            <result name="success" >jsp/ExtraTransactions.jsp</result>
+        </action> 
+        
+        <action name="reportExtraTransaction"  > 
+            <result   >report/extraReport.jsp</result>
+        </action>
+        
+        
+        <!--==============user update===============-->
+        
+        <action name="userUpdate">
+            <result>/UserDetails.jsp</result>
+        </action>
+        <action name="userController" method="updateUserRecord" class="com.sun.arun.UserController">  
+            <param name="message">${msge}</param>
+            <result name="success">/UserDetails.jsp</result>
+        </action>
+         
+        
+        <action name="mobileNumber">
+            <result>jsp/MobileSearch.jsp</result>
+        </action> 
+        
+        <action name="mobileNumberAdd" method="mobileNumberAdd" class="com.sun.mobile.MobileController">
+            <result name="success" type="redirectAction">
+                <param name="actionName">mobileNumber</param>
+                <param name="customerNameSearch">${customerNameSearch}</param>  
+                <param name="accountNumber">${accountNumber}</param>  
+            </result>
+            <result name="failure">jsp/MobileSearch.jsp</result>
+        </action>
+        
+        
+        
+        <action name="getCustomerDailySheet" method="getCustomerDailySheet"  class="com.sun.Accounts.DailySheetController">
+            <result name="success">jsp/dashboard.jsp</result>
+        </action>
+        
+        <action name="ajaxAction" method="getAccountDeatils"  class="com.sun.deposit.DepositMonthPaymentController">
+            <result name="success">deposit/DepositDetails.jsp</result>
+        </action>
+        
+        
+        <action name="getDailySheetDetailsInReport"   method="getDailySheetDetailsInReport" class="com.sun.update.UpdateInstallmentController">
+            <result name="success">report/dailySheetReport.jsp</result>
+        </action>
+        
+        
+        
+        <action name="updateInstallDetailsInReports"   method="updateInstallDetailsInReports" class="com.sun.update.UpdateInstallmentController">
+            <param name="message">${message}</param>
+            <result name="success">report/dailySheetReport.jsp</result>
+        </action>   
+        
+        <action name="deleteInstallDetailsInReports"   method="deleteInstallDetailsInReports" class="com.sun.update.UpdateInstallmentController">
+            <param name="message">${message}</param>
+            <result name="success">report/dailySheetReport.jsp</result>
+        </action>  
+         
+        <action name="monthlyReportDetails" > 
+            <result >deposit/totalCollectionMonthly.jsp</result>
+        </action>  
+        
+        
+        <action name="exportMonthlydetails" method="exportMonthlydetails" class="com.sun.Accounts.ExportMonthlyDetailsController" > 
+          
+            <result name="success" type="stream">
+                <param name="contentDisposition">attachment;filename="${fileName}"</param>
+                <param name="contentType">application/vnd.ms-excel</param>
+                <param name="inputName">inputStream</param>
+                <param name="bufferSize">1024</param> 
+            </result>  
+        </action> 
+        
+    </package> 
+    
+    
+</struts>
